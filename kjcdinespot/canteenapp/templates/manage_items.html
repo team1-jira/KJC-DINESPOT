@@ -1,0 +1,58 @@
+{% extends 'caterer_home.html' %}
+{% load static %}
+{% block content %}
+<h2>Manage Items for : {{ canteen.canteen_name }}</h2>
+  <div class="flex justify-between items-center mb-4">
+    <form method="get" class="w-full flex items-center space-x-4">
+      <div class="w-1/2 bg-gray-600">
+        <input type="text" name="search_title" class="text-black px-4 py-2 border rounded w-full" placeholder="Search items" value="{{ search_title }}">
+      </div> <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"><i class="fa-solid fa-search mr-2"></i>Search</button>
+    </form>
+    {% with canteen.id as cid %}
+  <a href="{% url 'add_item' %}" class="no-underline px-4 py-2 bg-green-500 text-white rounded"><i class="fa-solid fa-plus mr-2"></i> Add Item</a>
+  {% comment %} <a href="{% url 'update_item' cid item.slug %}" class="px-4 py-2 bg-yellow-500 text-white rounded">Edit</a> {% endcomment %}
+{% endwith %}
+</div>
+
+<div class="overflow-x-auto bg-gray-800 rounded-lg shadow">
+  <table class="w-full text-left text-sm text-gray-400">
+      <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+          <tr>
+            <th class="px-6 py-3">S.No</th>
+                <th class="px-6 py-3">Title</th>
+                <th class="px-6 py-3">Price</th>
+                <th class="px-6 py-3">Instructions</th>
+                <th class="px-6 py-3">Label</th>
+                <th class="px-6 py-3">Category</th>
+                <th class="px-6 py-3 text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr class="border-b border-gray-700 hover:bg-gray-600">
+              <td class="px-6 py-4">{{ forloop.counter }}</td>
+                <td class="px-6 py-4">{{ item.title }}</td>
+                <td class="px-6 py-4">{{ item.price }}</td>
+                <td class="px-6 py-4">{{ item.instructions }}</td>
+                <td class="px-6 py-4">{{ item.labels }}</td>
+                <td class="px-6 py-4">{{ item.get_category_display }}</td>
+                <td class="px-6 py-4 flex justify-between">
+                    {% with canteen.id as cid %}
+  {% comment %} <a href="{% url 'add_item' cid %}" class="no-underline px-4 py-2 bg-green-500 text-white rounded">Add Item</a> {% endcomment %}
+  <a href="{% url 'update_item' item.id %}" class="px-4 py-2 bg-yellow-500 text-white rounded"><i class="fa-solid fa-pen"></i></a>
+{% endwith %}
+                    <form action="{% url 'delete_item' item.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded" onclick="return confirm('Are you sure you want to delete this item?')"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center py-4">No items found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

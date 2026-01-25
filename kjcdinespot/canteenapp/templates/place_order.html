@@ -1,0 +1,10 @@
+<h1>Place Your Order</h1>
+<h2>{{ canteen.canteen_name }}</h2>
+<ul>
+    {% for item in menu %}
+    <li>
+        {{ item.item_name }} - ₹{{ item.price }}
+        <button>Add to Cart</button>
+    </li>
+    {% endfor %}
+</ul>

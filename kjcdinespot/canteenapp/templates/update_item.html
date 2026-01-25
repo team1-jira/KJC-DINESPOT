@@ -1,0 +1,119 @@
+{% extends 'caterer_home.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-16">
+    <section class="container mx-auto font-serif px-6">
+        <div class="container">
+            <h2 class="text-center mb-4 text-warning">Update Item: {{ item.title }}</h2>
+
+            <form method="post" enctype="multipart/form-data" class="space-y-4">
+                {% csrf_token %}
+
+                <!-- Display Messages -->
+                {% comment %} {% if messages %}
+                    <div class="mb-4">
+                        {% for message in messages %}
+                            <div class="text-white bg-blue-500 p-3 rounded">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %} {% endcomment %}
+
+                <!-- Table Form Layout -->
+                <div class="overflow-x-auto bg-gray-800 rounded-lg shadow">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+                            <tr>
+                                <th class="px-6 py-3">Field</th>
+                                <th class="px-6 py-3">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Title Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Title</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.title }}
+                                </td>
+                            </tr>
+
+                            <!-- Description Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Description</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.description }}
+                                </td>
+                            </tr>
+
+                            <!-- Price Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Price</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.price }}
+                                </td>
+                            </tr>
+
+                            <!-- Pieces Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Pieces</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.pieces }}
+                                </td>
+                            </tr>
+
+                            <!-- Category Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Category</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.category }}
+                                </td>
+                            </tr>
+
+                            <!-- Instructions Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Instructions</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.instructions }}
+                                </td>
+                            </tr>
+
+                            <!-- Image Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Image</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.image }}
+                                </td>
+                            </tr>
+
+                            <!-- Labels Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Labels</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.labels }}
+                                </td>
+                            </tr>
+
+                            <!-- Slug Field -->
+                            
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-8">
+                    <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        Update Item
+                    </button>
+                </div>
+            </form>
+
+            <!-- Link to Manage Items Page styled as a button -->
+            <div class="mt-4">
+                <a href="{% url 'manage_items' %}" class="no-underline inline-block px-6 py-3 bg-gray-500 text-white rounded hover:bg-gray-600">
+                    Back to Item List
+                </a>
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock %}

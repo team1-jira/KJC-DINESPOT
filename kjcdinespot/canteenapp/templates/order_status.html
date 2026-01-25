@@ -1,0 +1,8 @@
+<h1>Your Orders</h1>
+<ul>
+    {% for order in orders %}
+    <li>
+        {{ order.item_name }} - ₹{{ order.total_price }} - Status: {{ order.status }}
+    </li>
+    {% endfor %}
+</ul>

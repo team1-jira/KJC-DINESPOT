@@ -1,0 +1,59 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-16 bg-gray-900">
+    <section class="container mx-auto font-serif px-6">
+        <div class="container">
+            <h2 class="text-center mb-4 text-warning">Edit Block: {{ block.block_name }}</h2>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                
+                <!-- Table Form Layout -->
+                <div class="overflow-x-auto bg-gray-800 rounded-lg shadow">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-gray-700 text-gray-300 uppercase text-xs">
+                            <tr>
+                                <th class="px-6 py-3">Field</th>
+                                <th class="px-6 py-3">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Block Name Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Block Name</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.block_name }}
+                                </td>
+                            </tr>
+
+                            <!-- Description Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Description</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.description }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-8">
+                    <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        Update Block
+                    </button>
+                </div>
+            </form>
+
+            <!-- Link to Manage Blocks Page styled as a button -->
+            <div class="mt-4">
+                <a href="{% url 'manage_blocks' %}" class="no-underline inline-block px-6 py-3 bg-gray-500 text-white rounded hover:bg-gray-600">
+                    Back to Block List
+                </a>
+            </div>
+        </div>
+    </section>
+</section>
+{% endblock %}

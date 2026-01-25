@@ -1,0 +1,109 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-16 bg-gray-900">
+    <section class="container mx-auto font-serif px-6">
+        <div class="container">
+            <h2 class="text-center mb-4 text-warning">Add New User</h2>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                
+                <div class="overflow-x-auto bg-gray-800 rounded-lg shadow">
+                    <table class="w-full text-left text-sm text-gray-400">
+                        <thead class="bg-gray-700 text-gray-300 uppercase text-xs">
+                            <tr>
+                                <th class="px-6 py-3">Field</th>
+                                <th class="px-6 py-3">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Name Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Name</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.name }}
+                                    {% if form.name.errors %} 
+                                        <p class="error-message text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            <!-- Email Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Email</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.email }}
+                                    {% if form.email.errors %} 
+                                        <p class="error-message text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            <!-- Password Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Password</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.password }}
+                                    {% if form.password.errors %} 
+                                        <p class="error-message text-red-500 text-sm mt-1">{{ form.password.errors.0 }}</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            <!-- Role Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Role</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.role }}
+                                    {% if form.role.errors %} 
+                                        <p class="error-message text-red-500 text-sm mt-1">{{ form.role.errors.0 }}</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                            <!-- Phone Field -->
+                            <tr class="border-b border-gray-700">
+                                <th class="px-6 py-3 text-gray-300">Phone</th>
+                                <td class="px-6 py-4 w-3/4">
+                                    {{ form.phone }}
+                                    {% if form.phone.errors %}
+                                        <p class="error-message text-red-500 text-sm mt-1">{{ form.phone.errors.0 }}</p>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-8">
+                    <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        Add User
+                    </button>
+                </div>
+            </form>
+
+            <!-- Link to Manage Users Page -->
+            <div class="mt-4">
+                <a href="{% url 'manage_users' %}" class="no-underline inline-block px-6 py-3 bg-gray-500 text-white rounded hover:bg-gray-600">
+                    Back to User List
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {% comment %} <!-- JS to show popup on error -->
+    <script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        const errors = document.querySelectorAll(".error-message");
+        if (errors.length > 0) {
+            event.preventDefault();
+            let messages = Array.from(errors).map(err => err.textContent.trim());
+            alert("Please fix the following errors:\n\n" + messages.join("\n"));
+        }
+    });
+    </script> {% endcomment %}
+</section>
+{% endblock %}

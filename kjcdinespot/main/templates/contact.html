@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %} <!-- This must come before any block tag -->
+
+{% block content %}
+<main id="contact" class="container mx-auto px-0 lg:px-6 py-8 min-h-screen">
+    <section class="bg-black text-gray-200 p-8 rounded-lg shadow-lg mx-auto">
+        <h2 class="text-5xl font-serif text-center font-bold text-yellow-300 mb-6">Contact</h2>
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Map Section -->
+            <div class="flex-grow" data-aos="fade-up">
+                <iframe style="border:0; width: 100%; height: 100%; min-height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29554.733638034162!2d77.62545373955078!3d13.057942500000008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae17578c79da7d%3A0xe96dcd8e2b982f8e!2sKristu%20Jayanti%20College%2C%20Autonomous!5e1!3m2!1sen!2sin!4v1737553862697!5m2!1sen!2sin">
+                </iframe>
+            </div>
+
+            
+                        <!-- Form Section -->
+                        <form method="POST" action="{% url 'main:contact' %}" class="space-y-6">
+                            {% csrf_token %}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <input type="text" name="fname" placeholder="Your First Name"
+                                       pattern="[A-Za-z]{1,30}" maxlength="30"
+                                       title="Only letters allowed, max 30 characters, no spaces"
+                                       class="bg-black text-gray-200 py-3 px-4 rounded-lg w-full border border-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                       required>
+                                <input type="text" name="lname" placeholder="Your Last Name"
+                                       pattern="[A-Za-z]{1,30}" maxlength="30"
+                                       title="Only letters allowed, max 30 characters"
+                                       class="bg-black text-gray-200 py-3 px-4 rounded-lg w-full border border-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                       required>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <input type="tel" name="phone" placeholder="Your Phone"
+                                       pattern="\d{10}" maxlength="10"
+                                       title="Phone number must be exactly 10 digits"
+                                       class="bg-black text-gray-200 py-3 px-4 rounded-lg w-full border border-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                       required>
+                                <input type="email" name="email" placeholder="Your Email"
+                                       pattern="^[^@\s]+@[^@\s]+\.com$"
+                                       title="Enter a valid email ending with .com"
+                                       class="bg-black text-gray-200 py-3 px-4 rounded-lg w-full border border-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                       required>
+                            </div>
+                            <textarea name="message" placeholder="Message"
+                                      minlength="10"
+                                      title="Message should be at least 10 characters"
+                                      class="bg-black text-gray-200 py-3 px-4 rounded-lg w-full border border-gray-500 focus:ring-2 focus:ring-yellow-500 focus:outline-none"
+                                      rows="4" required></textarea>
+            
+                            <button type="submit"
+                                    class="bg-yellow-400 text-black py-3 px-6 rounded-lg hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+                                Submit
+                            </button>
+                        </form>
+            
+                    </div>
+                </section>
+            </main>
+            
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const fnameInput = document.querySelector('input[name="fname"]');
+              
+              // Prevent typing spaces
+              fnameInput.addEventListener('keydown', function(e) {
+                if (e.key === ' ') {
+                  e.preventDefault();
+                }
+              });
+            
+              // Remove spaces if pasted or inserted
+              fnameInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/\s+/g, '');
+              });
+            });
+            </script>
+            {% endblock %}
+            

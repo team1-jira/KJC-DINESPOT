@@ -1,0 +1,57 @@
+{% extends 'block_list.html' %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-black min-h-screen">
+    <div class="container mx-auto font-serif px-6">
+        <h1 class="text-3xl font-bold text-center text-warning mb-8">🛒 <span class="text-white">Order</span> Summary</h1>
+
+        {% if orders %}
+        <div class="flex justify-center items-start gap-6">
+            <div class="w-full">
+                <table class="w-full border border-gray-300 rounded-lg shadow-lg">
+                <thead class="bg-gray-900 text-gray-300 uppercase text-xs">
+                    <tr>
+                        <th class="px-6 py-3">Item</th>
+                        <th class="px-6 py-3">Quantity</th>
+                        <th class="px-6 py-3">Total Price</th>
+                        <th class="px-6 py-3">Order Status</th>
+                        <th class="px-6 py-3">Ordered Date</th>
+                        <th class="px-6 py-3">Payment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr class="border-b border-gray-200 bg-black hover:bg-gray-700 transition-all">
+                        <td class="px-6 py-4">{{ order.item.title }}</td>
+                        <td class="px-6 py-4">{{ order.quantity }}</td>
+                        <td class="px-6 py-4">₹{{ order.subtotal }}</td>
+                        <td class="px-6 py-4">
+                            <span class="{% if order.status == 'Ready' %}text-yellow-400{% elif order.status == 'Preparing' %}text-blue-400{% else %}text-red-400{% endif %}">
+                                {{ order.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ order.ordered_date }}</td>
+                        <td class="px-6 py-4">
+                            <span class="{% if order.payment_status == 'Completed' %}text-green-400{% elif order.payment_status == 'Pending' %}text-yellow-400{% else %}text-red-400{% endif %}">
+                                {{ order.payment_status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-center text-lg text-gray-400">No orders yet. Place an order now! 😊</p>
+        {% endif %}
+
+        {% comment %} <!-- Back to Menu Button -->
+        <div class="mt-6 text-center">
+            <a href="{% url 'canteen_menu' canteen_id=1 %}" 
+               class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 no-underline">
+                Back to Menu
+            </a>
+        </div> {% endcomment %}
+    </div>
+</section>
+{% endblock %}

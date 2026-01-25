@@ -1,0 +1,41 @@
+{% extends 'caterer_home.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-16 min-h-screen">
+    <div class="container mx-auto font-serif px-6">
+        <h1 class="text-3xl font-bold text-center text-warning mb-8">⭐ <span class="text-white">Customer</span> Reviews</h1>
+
+        {% if reviews %}
+        <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
+            <table class="w-full text-left text-sm text-gray-300">
+                <thead class="bg-gray-900 uppercase text-xs">
+                    <tr>
+                        <th class="px-6 py-3">Customer</th>
+                        <th class="px-6 py-3">Item</th>
+                        <th class="px-6 py-3">Rating</th>
+                        <th class="px-6 py-3">Review</th>
+                        <th class="px-6 py-3">Posted On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for review in reviews %}
+                    <tr class="border-b border-gray-700 hover:bg-gray-600 transition duration-200 ">
+                        <td class="px-6 py-4">{{ review.user.name }}</td>
+                        <td class="px-6 py-4">{{ review.item.title }}</td>
+                        <td class="px-6 py-4 text-yellow-400">
+                            {% for _ in "x"|rjust:review.rating %}⭐{% endfor %}
+                        </td>
+                        <td class="px-6 py-4">{{ review.review }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ review.posted_on }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-center text-lg text-gray-400">No reviews available yet. 😊</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,57 @@
+/* Full-page background styling */
+body {
+    background: url('https://source.unsplash.com/1920x1080/?college,canteen') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    color: white;
+}
+
+.navbar {
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+
+.navbar-brand:hover, .nav-link:hover {
+    color: #ffc107 !important; /* Highlight on hover */
+}
+
+.welcome-title {
+    text-align: center;
+    margin-top: 20%;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.btn-custom {
+    background-color: #ffc107;
+    border: none;
+    color: black;
+    font-weight: bold;
+}
+
+.btn-custom:hover {
+    background-color: #e0a800;
+}
+.dishes .main .container .row img{
+    max-width: 540px;
+    max-height: 450px;
+    width: fit-content;
+}
+
+.dishes .main .container .row .content{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}
+
+.dishes .main .container .row .information{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+}

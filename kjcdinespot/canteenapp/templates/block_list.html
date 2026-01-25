@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+  <title>KJC Dinespot</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playball&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  
+  <style>
+      /* Notification Bell Styling */
+      .notification-bell {
+          position: relative;
+          cursor: pointer;
+          font-size: 24px;
+          padding: 5px;
+      }
+      .notification-bell .count {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          background: red;
+          color: white;
+          border-radius: 50%;
+          padding: 5px 8px;
+          font-size: 14px;
+          display: none;
+      }
+      .notification-list {
+          display: none;
+          position: absolute;
+          top: 40px;
+          right: 0;
+          background: white;
+          color: black;
+          width: 250px;
+          border-radius: 5px;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+          padding: 10px;
+          z-index: 1000;
+      }
+      .notification-list.active {
+          display: block;
+      }
+      .notification-item {
+          padding: 8px;
+          border-bottom: 1px solid #ddd;
+      }
+      .notification-item:last-child {
+          border-bottom: none;
+      }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+  <!-- Header Start -->
+  <header class="header-section bg-dark py-3">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="#" class="logo text-light fw-bold">
+        <h1 class="nav-brand animated-jump"><i class="fas fa-utensils text-warning"></i>  KJC <span class="text-warning">Dinespot</span></h1>
+      </a>
+      <nav class="navigation d-flex align-items-center">
+        <ul class="nav-menu list-unstyled mb-0 d-flex">
+            <li class="nav-item">
+                <a href="{% url 'main:user_dashboard' %}" class="nav-link text-light px-3 nav-hover"><i class="fas fa-compass text-warning"></i>Explore</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'view_cart' %}" class="nav-link text-light px-3 nav-hover"><i class="fas fa-shopping-cart text-warning"></i>Cart</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'order-summary' %}" class="nav-link text-light px-3 nav-hover"><i class="fas fa-list text-warning"></i>Orders</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'main:logout' %}" class="nav-link text-light px-3 nav-hover" onclick="return confirm('Are you sure you want to logout?')"><i class="fas fa-sign-out-alt text-warning"></i>Logout</a>
+              </li>
+               <!-- Notification Bell -->
+          <li class="nav-item position-relative">
+            <div class="notification-bell" onclick="toggleNotifications()">
+              <i class="fas fa-bell text-warning"></i>
+                <span class="count" id="notification-count">0</span>
+            </div>
+            <div class="notification-list p-2 bg-white shadow rounded" id="notification-list">
+                <div id="notifications" class="text-dark"></div>
+            </div>
+        </li>
+             
+              
+            
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- Header End -->
+
+  <!-- Dynamic Content Section -->
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Footer Start -->
+  <footer class="footer-section bg-dark text-light py-4  w-full bottom-0">
+    <div class="container">
+        <div class="flex flex-col items-center">
+            <p class="mb-0 text-center">
+                &copy; <span class="text-warning">2025 KJC Dinespot</span>, All Rights Reserved.
+            </p>
+            {% comment %} Uncomment this if you'd like to display designer credits {% endcomment %}
+            <!-- <p class="mt-2 text-center">
+                Designed by <a href="#" class="text-warning">Christa Anna Sabu</a>
+            </p> -->
+        </div>
+    </div>
+</footer>
+
+  <!-- Footer End -->
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $('.carousel').carousel();
+    </script>
+    <script>
+      function fetchNotifications() {
+          fetch("{% url 'get_usernotifications' %}")
+              .then(response => response.json())
+              .then(data => {
+                  const notificationCount = document.getElementById("notification-count");
+                  const notificationsContainer = document.getElementById("notifications");
+  
+                  if (data.count > 0) {
+                      notificationCount.textContent = data.count;
+                      notificationCount.style.display = "block";
+  
+                      // Populate notification list
+                      notificationsContainer.innerHTML = "";
+                      data.orders.forEach(order => {
+                          const orderElement = document.createElement("p");
+                          orderElement.textContent = order;
+                          orderElement.classList.add("notification-item", "p-2", "border-bottom");
+                          notificationsContainer.appendChild(orderElement);
+                      });
+  
+                  } else {
+                      notificationCount.style.display = "none";
+                      notificationsContainer.innerHTML = "<p class='text-muted p-2'>No new updates</p>";
+                  }
+              })
+              .catch(error => console.error("Error fetching notifications:", error));
+      }
+  
+      // Toggle Notification List
+      function toggleNotifications() {
+          const notificationList = document.getElementById("notification-list");
+          notificationList.classList.toggle("active");
+      }
+  
+      // Close when clicking outside
+      document.addEventListener("click", function (event) {
+          const notificationList = document.getElementById("notification-list");
+          const notificationBell = document.querySelector(".notification-bell");
+  
+          if (!notificationBell.contains(event.target) && !notificationList.contains(event.target)) {
+              notificationList.classList.remove("active");
+          }
+      });
+  
+      // Fetch notifications every 5 seconds
+      setInterval(fetchNotifications, 5000);
+  
+      // Fetch notifications on page load
+      document.addEventListener("DOMContentLoaded", fetchNotifications);
+  </script>
+  
+</body>
+
+</html>

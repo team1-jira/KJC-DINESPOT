@@ -1,0 +1,63 @@
+{% extends 'caterer_home.html' %}
+{% load static %}
+
+{% block content %}
+<section class="py-16 min-h-screen">
+    <div class="container mx-auto font-serif px-6">
+        <h1 class="text-3xl font-bold text-center text-green-400 mb-8">✅ <span class="text-white">Completed</span> Orders</h1>
+
+        <!-- Search Form for Date Filtering -->
+        <form method="GET" class="mb-6 flex flex-wrap items-center justify-center gap-4">
+            <label class="text-white">From:</label>
+            <input type="date" name="start_date" value="{{ start_date|default_if_none:'' }}" 
+                class="px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600">
+            
+            <label class="text-white">To:</label>
+            <input type="date" name="end_date" value="{{ end_date|default_if_none:'' }}" 
+                class="px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600">
+            
+            <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                🔍 Search
+            </button>
+        </form>
+
+        {% if orders %}
+        <div class="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
+            <table class="w-full text-left text-sm text-gray-300">
+                <thead class="bg-gray-900 uppercase text-xs">
+                    <tr>
+                        <th class="px-6 py-3">Customer</th>
+                        <th class="px-6 py-3">Item</th>
+                        <th class="px-6 py-3">Quantity</th>
+                        <th class="px-6 py-3">Total Price</th>
+                        <th class="px-6 py-3">Delivered Date</th>
+                        <th class="px-6 py-3">Payment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr class="border-b border-gray-700 hover:bg-gray-600 transition duration-200">
+                        <td class="px-6 py-4">{{ order.user.name }}</td>
+                        <td class="px-6 py-4">{{ order.item.title }}</td>
+                        <td class="px-6 py-4">{{ order.quantity }}</td>
+                        <td class="px-6 py-4">₹{{ order.subtotal }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ order.ordered_date }}</td>
+                        <td class="px-6 py-4">{{ order.payment_status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-center text-lg text-gray-400">No completed orders found for the selected date range.</p>
+        {% endif %}
+
+        <!-- Back to Active Orders -->
+        <div class="mt-6 text-center">
+            <a href="{% url 'caterer_orders' %}" class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 no-underline">
+                ⬅ Back to Active Orders
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

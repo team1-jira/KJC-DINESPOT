@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Bill</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1c1c1c, #4c3f3f);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .receipt-container {
+            {% comment %} background: #222; {% endcomment %}
+            padding: 20px;
+            border-radius: 10px;
+            {% comment %} box-shadow: 0px 0px 15px rgba(255, 193, 7, 0.5); {% endcomment %}
+            width: 350px;
+            text-align: center;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffc107;
+        }
+        .info {
+            text-align: left;
+            margin: 10px 0;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .summary {
+            margin-top: 15px;
+            padding: 10px;
+            background: #4c3f3f;
+            border-radius: 5px;
+        }
+        .button {
+            margin-top: 15px;
+            display: inline-block;
+            background: #ffc107;
+            color: #222;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #e0a800;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <div class="text-green-500 text-4xl mb-4"> {% if payment.payment_method == "Cash" %}
+        ⏳
+    {% else %}
+        ✔
+    {% endif %}
+</div>
+<h2 class="text-xl font-bold">
+    {% if payment.payment_method == "Cash" %}
+        Order Processing
+    {% else %}
+        Payment Success!
+    {% endif %}
+</h2>
+<p>
+    {% if payment.payment_method == "Cash" %}
+        Your order is being processed. Payment will be collected on delivery.
+    {% else %}
+        Your payment has been successfully processed.
+    {% endif %}
+</p>
+
+        <div class="info">
+            <p><strong>User:</strong> {{ user.name }}</p>
+            <p><strong>Payment Method:</strong> {{ payment.payment_method }}</p>
+            <p><strong>Status:</strong> {{ payment.payment_status }}</p>
+            <p><strong>TID:</strong> {{ payment.transaction_id }}</p>
+            <p><strong>Date:</strong> {{ payment.payment_date }}</p>
+        </div>
+        <div class="summary">
+            <p><strong>Receipt Number:</strong> {{ payment.receipt_number }}</p>
+            <ul>
+                {% for item in cart_items %}
+                    <li>{{ item.item.title }} - ₹{{ item.subtotal }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Total: ₹{{ total_payment }}</h3>
+        </div>
+        {% comment %} <button class="button" id="downloadImage">Download Bill</button> {% endcomment %}
+    </div>
+
+    {% comment %} <script>
+        document.getElementById("downloadImage").addEventListener("click", function () {
+            const receipt = document.getElementById("receipt");
+
+            html2canvas(receipt).then(canvas => {
+                const image = canvas.toDataURL("image/png");
+                const link = document.createElement("a");
+                link.href = image;
+                link.download = "payment_receipt.png";
+                link.click();
+            });
+        });
+    </script> {% endcomment %}
+
+</body>
+</html>

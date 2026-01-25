@@ -1,0 +1,42 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block content %}
+        <section class="p-6 grid grid-cols-3 mb-6">
+          <div class="bg-gray-700 p-6 w-80 h-48 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400 flex flex-col items-center justify-between">
+            <!-- Centered Icon -->
+            <i class="fas fa-users text-gray-200 text-4xl mb-2"></i>
+            <!-- Title -->
+            {% comment %} <p class="font-serif text-gray-200 text-lg">Number of Users </p> {% endcomment %}
+            <!-- Count -->
+            <div class="text-4xl text-center font-extrabold text-white"><p class="font-serif text-gray-200 text-lg">Number of Users </p>{{ users_count }}</div>
+          </div>
+          
+          <div class="bg-gray-700 p-6 w-80 h-48 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400 flex flex-col items-center justify-between">
+            <!-- Centered Icon -->
+            <i class="fas fa-utensils text-gray-200 text-4xl mb-2"></i>
+            <!-- Title -->
+            {% comment %} <p class="font-serif text-gray-200 text-lg">Number of Users </p> {% endcomment %}
+            <!-- Count -->
+            <div class="text-4xl text-center font-extrabold text-white"><p class="font-serif text-gray-200 text-lg">Number of Caterers </p>{{ caterers_count }}</div>
+          </div>
+          <div class="bg-gray-700 p-6 w-80 h-48 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400 flex flex-col items-center justify-between">
+            <!-- Centered Icon -->
+            <i class="fas fa-building text-gray-200 text-4xl mb-2"></i>
+            <!-- Title -->
+            {% comment %} <p class="font-serif text-gray-200 text-lg">Number of Users </p> {% endcomment %}
+            <!-- Count -->
+            <div class="text-4xl text-center font-extrabold text-white"><p class="font-serif text-gray-200 text-lg">Number of Blocks </p>{{ blocks_count }}</div>
+          </div>
+          <div class="bg-gray-700 mt-10 p-6 w-80 h-48 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400 flex flex-col items-center justify-between">
+            <!-- Centered Icon -->
+            <i class="fas fa-store text-gray-200 text-4xl mb-2"></i>
+            <!-- Title -->
+            {% comment %} <p class="font-serif text-gray-200 text-lg">Number of Users </p> {% endcomment %}
+            <!-- Count -->
+            <div class="text-4xl text-center font-extrabold text-white"><p class="font-serif text-gray-200 text-lg">Number of Canteens </p>{{ canteens_count }}</div>
+          </div>
+        </section>
+  
+      </main>
+      {% endblock %}
+      

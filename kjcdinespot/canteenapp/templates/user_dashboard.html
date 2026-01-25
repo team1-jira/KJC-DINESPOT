@@ -1,0 +1,27 @@
+{% extends 'block_list.html' %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-gray-900">
+  <section class="container mx-auto font-serif px-6">
+<div class="container mt-2">
+  <h2 class="text-center mb-4">Welcome, <span class="text-warning">{{ user.name }}</span></h2>
+  <h1 class="text-5xl font-semibold mb-8 mt-8">Blocks</h1>
+  <div class="grid grid-cols-2 md:grid-cols-2 gap-6">
+   
+        {% for block in blocks %}
+        <a class="accordion-button collapsed no-underline " href="{% url 'block_canteens' block.id %}" aria-expanded="false" aria-controls="collapse{{ block.id }}">
+        <div class="p-6 w-100 bg-gray-800 rounded-lg shadow-lg tranition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400">
+          <h5 class="text-3xl font-bold text-yellow-950 mb-2" id="heading{{ block.id }}">{{ block.canteens.count }} <i class="fas fa-utensils"></i></h5>
+            <h4 class="text-2xl font-semibold text-center mb-2">
+              {% comment %} <a class="accordion-button collapsed " href="{% url 'block_canteens' block.id %}" aria-expanded="false" aria-controls="collapse{{ block.id }}"> {% endcomment %}
+              {{ block.block_name }}
+          {% comment %} </a> {% endcomment %}
+          </h4>
+
+        </div></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

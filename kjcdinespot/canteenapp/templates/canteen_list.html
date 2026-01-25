@@ -1,0 +1,42 @@
+{% extends 'block_list.html' %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-gray-900 min-h-screen">
+  <section class="container mx-auto font-serif px-6">
+    <div class="container mt-2">
+      <h2 class="text-center mb-4">Canteens in <span class="text-warning">{{ block_name }}</span></h2>
+      <div class="grid grid-cols-2 md:grid-cols-2 gap-6">
+        {% for canteen in canteens %}
+        <!-- Canteen Card -->
+        <a href="{% url 'canteen_menu' canteen.id %}" class="text-white no-underline hover:text-yellow-400 transition duration-300">
+        <div class="p-6 w-full bg-gray-800 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-yellow-400">
+          <!-- Canteen Icon and Name -->
+          <div class="text-5xl text-white mb-4 flex items-center justify-center"> <!-- Changed to white color -->
+            <i class="fas fa-utensils text-white hover:text-yellow-400 transition duration-300"></i> <!-- White icon by default, yellow on hover -->
+          </div>
+          <h4 class="text-2xl font-bold text-center text-white mb-2">
+            {{ canteen.canteen_name }}
+          </h4>
+          <!-- Managed By -->
+          <p class="text-center text-sm text-gray-300">
+            Managed by: 
+            <span class="text-white hover:text-yellow-400 transition duration-300">{{ canteen.caterer.name }}</span> <!-- White text, yellow on hover -->
+          </p>
+        </div>
+        {% empty %}
+        <!-- Empty State -->
+        <div class="col-span-2 text-center">
+          <p class="text-xl text-gray-300">No canteens available in this block.</p>
+        </div></a>
+        {% endfor %}
+      </div>
+      <!-- Back to Blocks Button -->
+      <div class="mt-8 text-center">
+        <a href="{% url 'main:user_dashboard' %}" class="inline-block no-underline bg-yellow-400 text-black px-6 py-2 rounded-md shadow-md hover:bg-grey-500">
+          Back to Blocks
+        </a>
+      </div>
+    </div>
+  </section>
+</section>
+{% endblock %}

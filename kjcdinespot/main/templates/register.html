@@ -1,0 +1,13 @@
+<h1>Register</h1>
+<form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="text" name="phone_no" placeholder="Phone Number" required>
+    <select name="role">
+        <option value="user">User</option>
+        <option value="caterer">Caterer</option>
+        <option value="admin">Admin</option>
+    </select>
+    <button type="submit">Register</button>
+</form>
